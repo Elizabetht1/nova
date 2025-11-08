@@ -24,7 +24,7 @@ def download_video(video_meta,dataset_path,fname):
             # Download the video to the specified path
             print(f"Downloading '{yt.title}' to '{dataset_path}'...")
             stream.download(output_path=dataset_path,
-                            filename=fname)
+                            filename=f'{fname}.mp4')
             print("Download complete!")
         else:
             print("No suitable stream found for download.")
@@ -33,5 +33,6 @@ def download_video(video_meta,dataset_path,fname):
 
 if __name__ == "__main__":  
     meta = load_json('data/test.json')
-    download_video(meta,"data")
+    for v in meta:
+        download_video(v,"data",v['video_id'])
 
