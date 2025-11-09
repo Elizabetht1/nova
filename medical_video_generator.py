@@ -11,10 +11,14 @@ here = Path(__file__).parent
 image = modal.Image.debian_slim().pip_install("fastapi[standard]")
 
 
-@app.function(image=image)
+@app.function(image=image,
+              timeout=3600,  # 1 hour (adjust as needed)
+              min_containers=1,  # Keep container warm to avoid cold starts
+              gpu="L40S"
+              )
 @modal.fastapi_endpoint()
 def main(finetune_id, prompt_file=None):
-    clip_duration = 10  # seconds
+    clip_duration = 3 # seconds
 
     generator = modal.Cls.from_name("finetune-video-generate", "VideoGenerator")(
         finetune_id=finetune_id
