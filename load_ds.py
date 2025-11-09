@@ -10,9 +10,9 @@ def load_json(fp,filter="label:Medical Instructional",limit = 10):
         for entry in data: 
             if limit and cnt >= limit:
                 break 
-            if entry[key] == val:
+            if val in " ".join(entry[key]):
                 parsed_data.append(entry)
-            cnt +=1 
+                cnt +=1 
     return parsed_data
 
 def download_video(video_meta,dataset_path,fname):
